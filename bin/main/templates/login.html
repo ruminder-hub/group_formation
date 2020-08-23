@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link href="webjars/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+<meta charset="UTF-8">
+<title>Login</title>
+</head>
+<body>
+	<form th:action="@{/login}" th:object="${user}" method="post">
+		<div th:style="|position: absolute; left: 40px; top: 40px;|">
+			<label>Banner ID</label> &emsp;
+			<input type="text" id="bannerId" name="bannerId"/> 
+			<br/><br/>
+			<label>Password</label> &emsp;
+			<input type="password" id="password" name="password"/>
+			
+			<div th:style="|position: absolute; left: 20px; top: 120px;|">
+				<input type="submit" value="Log In" class="btn btn-primary"> &emsp;&emsp;
+				<input type="button" value="Sign Up" class="btn btn-success" th:onclick="|window.location.href='/signup'|">
+			</div>
+			
+			<div th:style="|position: absolute; left: 0px; top: 180px;|">
+				<a th:href="@{/forgotpassword}">Forgot your password? Click here</a>
+			</div>
+			
+			<div th:style="|position: absolute; left: 0px; top: 230px;|">
+				<p th:if="${invalidcred}" class="text-danger"> Wrong Banner ID or Password </p>
+				<p th:if="${invalidData}" class="text-danger">Data Invalid</p>	
+			</div>
+			
+			<br/>
+			<br/>
+		</div>
+	</form>
+	<script src="webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body>
+</html>

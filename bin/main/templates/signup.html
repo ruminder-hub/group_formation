@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link href="webjars/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+<meta charset="UTF-8">
+<title>Sign Up</title>
+</head>
+<body>
+	<form th:action="@{/signup}" th:object="${user}" method="post">
+		<div th:style="|margin-left:30px;margin-top:30px|">
+				<label>Banner ID</label>
+				<input type="text" id="bannerid" name="bannerId" th:style="|margin-left:80px|"/>
+			<br/>
+			<br/>
+				<label>First Name</label>
+				<input type="text" id="firstname" name="firstName" th:style="|margin-left:72px|"/>
+			<br/>
+			<br/>
+				<label>Last Name</label>
+				<input type="text" id="lastname" name="lastName" th:style="|margin-left:73px|"/>
+			<br/>
+			<br/>
+				<label>Email</label>
+				<input type="text" id="email" name="email" th:style="|margin-left:112px|"/>
+			<br/>
+			<br/>
+				<label>Password</label>
+				<input type="password" id="password" name="password" th:style="|margin-left:81px|"/>
+			<br/>
+			<br/>
+				<label>Confirm Password</label>
+				<input type="password" id="confirmpassowrd" name="confirmpassowrd" th:style="|margin-left:19px|"/>
+			<br/>
+			<br/>
+				<p th:if="${alreadyuserexist}" class="text-danger"> User Already Exists with give banner number</p>
+				<p th:if="${registrationsuccess}" class="text-success"> Succesfully Registered </p>	
+				<p th:if="${invalidData}" class="text-danger">Data Invalid</p>
+				<p th:if="${registrationfailed}" class="text-danger">Signup failed. Try with different email</p>
+			
+			<br/>
+				<input type="submit" value="Sign Up" class="btn btn-small btn-success"> &nbsp;&nbsp;
+			<br/>
+			<br/>
+				<a th:href="@{/login}"> << Login Here</a>
+		</div>
+	</form>
+	<script src="webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body>
+</html>
