@@ -30,11 +30,6 @@ h1 {
 	padding-top: 1em;
 }
 
-form input {
-	margin: 1em 0;
-	height: 40px;
-}
-
 form input[type="submit"] {
 	background-color: skyblue;
 }
@@ -142,6 +137,18 @@ a.signupLogin:active {
 	display: grid;
 	grid-template-columns: 1fr 2fr 1fr;
 	gap: 20px;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	justify-self: center;
+}
+
+@media screen and (min-width: 768px) {
+    form-group {
+    width: 50%;
+    } 
 }
 .mainGridRow {
 	grid-column: 1/-1;
