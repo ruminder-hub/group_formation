@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Question Creation</title>
+<link type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" / >
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container m-3 p-3">
+	<h1 class="ml-5"> Add answer options</span></h1>
+	
+	<div class="form-group m-5">
+        <form th:action="@{/question/submit}" th:method="post" style="width: 100%;">
+            <input type="hidden" th:name="title" th:value="${title}" />
+            <input type="hidden" th:name="question" th:value="${question}" />
+            <input type="hidden" th:name="type" th:value="${type}" />
+            <div id="answers">
+                <table style="width: 100%;">
+                    <tr>
+                        <td >
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        Display Text
+                                    </div>
+                                </div>
+                                    <input type="text" name="option" class="form-control" id="inlineFormInputGroup" placeholder="" required >
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        Stored as
+                                    </div>
+                                </div>
+                                    <input type="text" name="value" class="form-control" id="inlineFormInputGroup" required>
+                            </div>
+                        </div>
+                        </td>
+                    </tr>
+                </table>
+                </div>  
+			
+			<table style="margin-top: 10%;">
+				<tr class="d-flex">
+                    <td class="col-7" style="left:10%; width: 100%;">
+						<button class="btn btn-secondary" onclick="addOptions()" type="button">Add More Answers</button>
+					</td>
+					<td class="col-7" style="left:10%; width: 100%;">
+						<button class="btn btn-secondary" style="width: 100%" type="Submit">Next</button>
+					</td>
+					<td class="col-10 align-middle" style="left: 20%;">
+						<a th:href="@{/viewQuestions(id=${instructorId}, order)}" class="btn btn-warning" role="">Cancel Question Creation</a>
+					</td>
+				</tr>
+			</div>
+			</table>
+        </form>
+        
+	</div>
+	
+</div>
+
+</body>
+
+<script>
+    function addOptions() {
+        $("#answers").append(
+            '<table style="width: 100%;">'
+                + '<tr>'
+                +    '<td >'
+                +        '<div class="input-group mb-2">'
+                +            '<div class="input-group-prepend">'
+                +                '<div class="input-group-text">'
+                +                   'Display Text'
+                +               '</div>'
+                +           '</div>'
+                +               '<input type="text" name="option" class="form-control" id="inlineFormInputGroup" placeholder="" required>'
+                +       '</div>'
+                +   '</td>'
+                +   '<td>'
+                +       '<div class="input-group mb-2">'
+                +            '<div class="input-group-prepend">'
+                +       '<div class="input-group-text">'
+                +       'Stored as'
+                +                '</div>'
+                +   '</div>'
+                +   '<input type="text" name="value" class="form-control" id="inlineFormInputGroup" placeholder="" required>'
+                +   '</div>'
+                +   '</div>'
+                +   '</td>'
+                +   '</tr>'
+                +'</table>' );
+    }
+
+</script>
+
+</html>

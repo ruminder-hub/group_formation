@@ -1,18 +1,56 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<link href="webjars/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
-<meta charset="UTF-8">
-<title>Home Page</title>
-</head>
-<body>
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
+	<head>
+		<title>Group Formation Tool</title>
+		<link th:href="@{/styles/css/normalize.css}" rel="stylesheet" />
+		<link th:href="@{/styles/css/main.css}" rel="stylesheet" />
+		<link type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<nav class="navbar navbar-expand-sm nav-green">
+			<a class="navbar-brand">Group Formation Tool</a>
+		</nav>
+		
+		<div class="bodyGridRow userProfileGridContainer" sec:authorize="isAuthenticated()">
+			<h4 class="userProfileGridCol1" th:inline="text">BannerID: [[${#httpServletRequest.remoteUser}]]</h4>
+			<form class="userProfileGridCol3" th:action="@{/logout}" method="post">
+				<input type="submit" value="Sign Out"/>
+			</form>
+			<form class="userProfileGridCol5" th:action="@{/updatepassword}" method="post">
+				<input type="text" name="password" required>
+				<input type="hidden" name="username" th:value="${#httpServletRequest.remoteUser}">
+				<input type="submit" value="Update Password">
+			</form>
+			<div class="mainGridCentreInfoBox" th:each="failedValidations : ${passwordPolicyValidation}">
+				<h3 class="errorInfo" th:text="'Criteria ' + ${failedValidations} + ' for password did not match'"></h3>
+			</div>
+		</div>
 	
-	<div th:style="|position: absolute; left: 40px; top: 40px;|">
-		<h1>Welcome To Adv SDC Project</h1>
-		<br/><br/><br/>
-		<a th:href="@{/login}">Login Here</a>
-	</div>
-	
-	<script src="webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-</body>
+		<main class="bodyGridRow mainGridContainer">
+			<aside class="mainGridRow welcomeInfoBox">
+				<h2>Welcome to the Group Formation Tool!!</h2>
+			</aside>
+			<div class="mainGridRow" sec:authorize="isAuthenticated()">
+				<h4>Available courses:</h4>
+				<table>
+					<tr th:each="course : ${courses}">
+						<td><a th:href="@{/course/course(id=${course.id})}" th:text="${course.title}">Title</a></td>
+					</tr>
+				</table>
+			</div>
+			<div class="mainGridCentreCard" sec:authorize="!isAuthenticated()">
+				<p>This site requires you to be logged in.</p>
+			</div>
+			<a class="signupLogin mainGridRow mainGridCentreCard" sec:authorize="!isAuthenticated()" th:href="@{/login}">Click here to log in!</a>
+		</main>
+		<footer class="bodyGridRow footerGridContainer">
+			<p><strong>CSCI5308 (Advanced Topics in Software Development)</strong> is a graduate course offered for students enrolled in the <a href="https://www.dal.ca/macs" target="_blank">Master of Applied Computer Science (MACS)</a> at the <a href="https://www.dal.ca/cs" target="_blank">Faculty of Computer Science</a>, <a href="https://www.dal.ca" target="_blank">Dalhousie University</a>.</p>
+		</footer>
+	</body>
 </html>

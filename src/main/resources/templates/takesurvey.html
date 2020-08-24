@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="https://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
+<head>
+    <title>CSCI5308 - Group Formation Tool</title>
+</head>
+<body>
+<!-- I got the idea for how to do this from https://www.thymeleaf.org/doc/articles/springsecurity.html -->
+<div sec:authorize="isAuthenticated()">
+    <h4 th:inline="text">BannerID: [[${#httpServletRequest.remoteUser}]]</h4>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out"/>
+    </form>
+</div>
+<h1>Survey Question List</h1>
+<div>
+    <form th:action="@{/survey/submitSurvey}" th:object="${response}">
+        <div th:each="questObject,stat : ${questionList}">
+            <input type="hidden" th:name="questId" th:value="${questObject.getId()}"/>
+            <input type="hidden" th:name="courseId" th:value="${courseId}" />
+<!--            <h3 th:text="${questObject.getTitle()}"></h3>-->
+            <h4 th:text="${questObject.getQuestion()}"></h4>
+            <div th:switch="${questObject.getType()}">
+                <div th:case="'1'">
+                    Response : <input type="number" th:field="*{responseList[__${stat.index}__]}" name="responses" required="required"/>
+                </div>
+                <div th:case="'2'">
+                    Response :
+                    <select th:field="*{responseList[__${stat.index}__]}">
+                        <option name="responses" th:each="optionObject : ${questObject.getAnswerOptions()}"
+                                th:value="${optionObject.getValue()}" th:text="${optionObject.getText()}"
+                        ></option>
+                    </select>
+                </div>
+                <div th:case="'3'">
+                    Response :
+                    <table>
+                        <tr th:each="optionObject : ${questObject.getAnswerOptions()}">
+                            <td>
+                                <input type="checkbox" th:field="*{responseList[__${stat.index}__]}" name="responses" th:value="${optionObject.getValue()}"/>
+                                <label th:text="${optionObject.getText()}"></label>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div th:case="'4'">
+                    Response :
+                    <textarea name="responses" th:field="*{responseList[__${stat.index}__]}" rows="3" required="required"></textarea>
+                </div>
+            </div>
+            <hr>
+        </div>
+        <br/>
+        <input type="submit" value="Submit Survey"/>
+    </form>
+</div>
+</body>
+</html>

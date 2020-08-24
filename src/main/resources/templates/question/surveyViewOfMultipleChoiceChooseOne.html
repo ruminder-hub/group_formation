@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Survey Question View</title>
+
+<link type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" / >
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container" style="margin-top: 5%;">
+    <h2 class="m-3">View of Question created</h2>
+    <div class="m-3"><h5>Title:      <span th:text="${title}"></span></h5></div>
+    <div class="m-3"><h5>Options</h5></div>
+    <div class="form-group m-3" style="width: 30%;">
+        <label for="quesType" th:text=${question}></label>
+        <select class="form-control" >
+            <option th:each="optionObject : ${answerOptions}" th:value=${optionObject} th:text=${optionObject}></option>
+          </select>
+    </div>
+
+
+
+
+    <form th:action="@{/question/save}" th:method="post" style="width: 100%;">
+        <input type="hidden" th:name="title" th:value="${title}" />
+        <input type="hidden" th:name="question" th:value="${question}" />
+        <input type="hidden" th:name="type" th:value="${type}" />
+        <table class="container-fluid" style="margin-left: 5%">
+            <tr th:each="optionObject : ${answerOptions}">
+                <td>
+                    <input type="hidden" th:name="option" th:value=${optionObject} />
+                </td>
+                
+            </tr>
+        </table>
+        <table class="container-fluid" style="margin-left: 5%">
+            <tr th:each="valueObject : ${valueOptions}">
+                <td>
+                    <input type="hidden" th:name="value" th:value=${valueObject}/>
+                </td>
+                
+            </tr>
+        </table>
+        <table class="m-3">
+            <tr class="d-flex">
+                <td class="col-7">
+                    <button class="btn btn-primary" type="Submit">Save</button>
+                </td>
+                <td class="col-10 align-middle" style="left: 20%;">
+                    <a th:href="@{/viewQuestions(id=${instructorId},order)}" class="btn btn-danger" role="">Cancel Question Creation</a>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+</body>
+</html>
