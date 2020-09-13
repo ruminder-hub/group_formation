@@ -6,15 +6,26 @@ Programming Language: Java
 Framework: Spring Boot
 Database: MySQL
 
-## Description
-It is used to create groups based on answers provided by students toward survey questions.
+## Features
+1. Admin can assign multiple role to users (Student, Teaching Assistant, Course Instrucor).
+2. Admin can assign user Course Instructor, who can assign Teaaching Assistant for their course.
+3. Admin can create a new course or delete the course.
 
 ## Code structure
-* [main] (https://github.com/ruminder-hub/group_formation/tree/master/src/main) package: It contains the source code of the application.
-* [test] (https://github.com/ruminder-hub/group_formation/tree/master/src/test) package: It consists of test cases of source code.
+* <a href='https://github.com/ruminder-hub/group_formation/tree/master/src/main'>[main] </a> package: It contains the source code of the application.
+* <a href='https://github.com/ruminder-hub/group_formation/tree/master/src/test'>[test] </a> package: It consists of test cases of source code.
 
 ## Architecture
 The application follows the MVC pattern. All logic is written in Model layer.
+
+## Implementation
+### S.O.L.I.D Principles and Design Pattern
+
+### Test Driver Development (TDD)
+
+### Logging and Exception Handling
+
+### Clean Code
 
 
 
