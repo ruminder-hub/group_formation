@@ -10,6 +10,19 @@ Database: MySQL
 1. Admin can assign multiple role to users (Student, Teaching Assistant, Course Instrucor).
 2. Admin can assign user Course Instructor, who can assign Teaaching Assistant for their course.
 3. Admin can create a new course or delete the course.
+4. Instructor can create pool of questions which can be used to create survey.
+5. From the collected responses, instructor can create groups.
+
+## Group Formation Alogrithm
+* Intially 'n' number of empty groups are created, 'n' provided by the instructor.
+* A threshold is set at maximum of 90, which is similarity percentage; how much responses in a group are similar.
+* For every student, survey response is collected from the database and compared with the response of students in the group.
+* If group is empty student is assigned to that group.
+* If group is not empty and group size is less than maximum group size, student response is compared with all the students present in that group.
+* If student response similarity is greater than threshold,student is assigned to that group.
+* If student response similarity is less than threshold:
+    * If student response is compared with all the group and every group response similarity with student is less than threshold, threshold is decreased by 5.
+    * Student response is compared with another group.
 
 ## Code structure
 * <a href='https://github.com/ruminder-hub/group_formation/tree/master/src/main'>[main] </a> package: It contains the source code of the application.
