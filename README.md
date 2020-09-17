@@ -21,8 +21,9 @@ Database: MySQL
 * If group is not empty and group size is less than maximum group size, student response is compared with all the students present in that group.
 * If student response similarity is greater than threshold,student is assigned to that group.
 * If student response similarity is less than threshold:
-    * If student response is compared with all the group and every group response similarity with student is less than threshold, threshold is decreased by 5.
     * Student response is compared with another group.
+    * If student response is compared with all the group and every group response similarity with student response is less than threshold, threshold is decreased by 5.
+
 
 ## Code structure
 * <a href='https://github.com/ruminder-hub/group_formation/tree/master/src/main'>[main] </a> package: It contains the source code of the application.
