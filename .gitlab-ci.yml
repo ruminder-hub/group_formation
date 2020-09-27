@@ -1,0 +1,58 @@
+#variables:
+#    GIT_STRATEGY: clone
+image: java:8-jdk
+
+stages:
+    - build
+    - test
+    - deploy
+
+before_script:
+     - export GRADLE_USER_HOME='pwd'/.gradle
+     - chmod +x ./gradlew
+
+cache:
+    paths:
+        - .gradle/wrapper
+        - .gradle/caches
+
+build:
+#    image: gradle:alpine
+    stage: build
+    script: 
+        - ./gradlew assemble
+    tags:
+#        - grad
+        - dalfcs_gitlab_docker_ci
+test: 
+    stage: test 
+    script:
+        - ./gradlew check
+    tags:
+#        - grad
+        - dalfcs_gitlab_docker_ci
+develop:
+    stage: deploy
+    image: ruby:latest
+    script:
+        - apt-get update -qy
+        - apt-get install -y ruby-dev 
+        - gem install dpl
+        - dpl --provider=heroku --app=$HEROKU_APPNAME_DEVELOP --api-key=$HEROKU_APIKEY
+    only:
+        - develop
+    tags:
+        - dalfcs_gitlab_docker_ci
+
+deploy:
+    stage: deploy
+    image: ruby:latest
+    script:
+        - apt-get update -qy
+        - apt-get install -y ruby-dev 
+        - gem install dpl
+        - dpl --provider=heroku --app=$HEROKU_APPNAME_DEPLOY --api-key=$HEROKU_APIKEY
+    only:
+        - master
+    tags:
+        - dalfcs_gitlab_docker_ci
