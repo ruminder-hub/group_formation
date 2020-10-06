@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org">
+<head>
+    <link type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <title>CSCI5308 - Group Formation Tool</title>
+</head>
+<body>
+<div class="container container-fluid">
+    <div class="row">
+        <div class="col-md-12"><h2 align="center">These are the groups created</h2></div>
+    </div><br/><br/>
+
+    <div class="row">
+        <div class="col-md-4" th:each="group : ${Group}">
+            <div th:if="${group.getGroupId() %2 == 0}">
+                <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+                    <div class="card-header" th:text="'Group Number ' + ${group.getGroupId()}"></div>
+                    <div class="card-body">
+                        <div th:each="member :${group.getUsers()}">
+                            <p class="card-text" th:text="${member.getBannerID()}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div th:if="${group.getGroupId() %2 != 0}">
+                <div class="card text-white bg-danger mb-3" style="max-width: 18rem;">
+                    <div class="card-header" th:text="'Group Number ' + ${group.getGroupId()}"></div>
+                    <div class="card-body">
+                        <div th:each="member :${group.getUsers()}">
+                            <p class="card-text" th:text="${member.getBannerID()}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

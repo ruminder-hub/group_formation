@@ -1,49 +1,58 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<link href="webjars/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
-<meta charset="UTF-8">
-<title>Sign Up</title>
-</head>
-<body>
-	<form th:action="@{/signup}" th:object="${user}" method="post">
-		<div th:style="|margin-left:30px;margin-top:30px|">
-				<label>Banner ID</label>
-				<input type="text" id="bannerid" name="bannerId" th:style="|margin-left:80px|"/>
-			<br/>
-			<br/>
-				<label>First Name</label>
-				<input type="text" id="firstname" name="firstName" th:style="|margin-left:72px|"/>
-			<br/>
-			<br/>
-				<label>Last Name</label>
-				<input type="text" id="lastname" name="lastName" th:style="|margin-left:73px|"/>
-			<br/>
-			<br/>
-				<label>Email</label>
-				<input type="text" id="email" name="email" th:style="|margin-left:112px|"/>
-			<br/>
-			<br/>
-				<label>Password</label>
-				<input type="password" id="password" name="password" th:style="|margin-left:81px|"/>
-			<br/>
-			<br/>
-				<label>Confirm Password</label>
-				<input type="password" id="confirmpassowrd" name="confirmpassowrd" th:style="|margin-left:19px|"/>
-			<br/>
-			<br/>
-				<p th:if="${alreadyuserexist}" class="text-danger"> User Already Exists with give banner number</p>
-				<p th:if="${registrationsuccess}" class="text-success"> Succesfully Registered </p>	
-				<p th:if="${invalidData}" class="text-danger">Data Invalid</p>
-				<p th:if="${registrationfailed}" class="text-danger">Signup failed. Try with different email</p>
-			
-			<br/>
-				<input type="submit" value="Sign Up" class="btn btn-small btn-success"> &nbsp;&nbsp;
-			<br/>
-			<br/>
-				<a th:href="@{/login}"> << Login Here</a>
-		</div>
-	</form>
-	<script src="webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-</body>
+<!DOCTYPE html>  
+<html xmlns:th="http://www.thymeleaf.org">  
+<head>  
+	<title>CSCI5308 Group Formation Tool - Signup page</title>
+	<link th:href="@{/styles/cssandjs/normalize.css}" rel="stylesheet" />
+	<link th:href="@{/styles/cssandjs/main.css}" rel="stylesheet" />
+</head>  
+<body class="bodyGridContainer">
+<header class="bodyGridRow headerGridContainer">
+    <h1>CSCI5308 Group Formation Tool</h1>
+</header>
+<main class="bodyGridRow mainGridContainer">
+    <aside class="mainGridRow welcomeInfoBox">
+        <h2>Welcome to the group formation tool, please enter your information:</h2>
+    </aside>
+
+    <div class="mainGridCentreInfoBox" th:if="${errorMessage}">
+        <h3 class="errorInfo" th:text="${errorMessage}"></h3>
+    </div>
+    <div class="mainGridCentreInfoBox" th:each="failedValidations : ${passwordPolicyValidation}">
+        <h3 class="errorInfo" th:text="'Criteria ' + ${failedValidations} + ' for password did not match'"></h3>
+    </div>
+    <div class="mainGridCentreCard">
+        <form class="regnLoginGridContainer" th:action="@{/signup}" method="post">
+            <label class="regnLoginGridLeftCol" for="sBannerInput">Banner ID:</label><input id="sBannerInput"
+                                                                                            class="regnLoginGridRightCol"
+                                                                                            type="text"
+                                                                                            name="username"/>
+            <label class="regnLoginGridLeftCol" for="sPswdInput">Password:</label><input id="sPswdInput"
+                                                                                         class="regnLoginGridRightCol"
+                                                                                         type="password"
+                                                                                         name="password"/>
+            <label class="regnLoginGridLeftCol" for="sPswdConfirmInput">Password (Confirmation):</label><input
+                id="sPswdConfirmInput" class="regnLoginGridRightCol" type="password" name="passwordConfirmation"/>
+            <label class="regnLoginGridLeftCol" for="sFNameInput">First Name:</label><input id="sFNameInput"
+                                                                                            class="regnLoginGridRightCol"
+                                                                                            type="text"
+                                                                                            name="firstName"/>
+            <label class="regnLoginGridLeftCol" for="sLNameInput">Last Name:</label><input id="sLNameInput"
+                                                                                           class="regnLoginGridRightCol"
+                                                                                           type="text" name="lastName"/>
+            <label class="regnLoginGridLeftCol" for="sEmailInput">Email:</label><input id="sEmailInput"
+                                                                                       class="regnLoginGridRightCol"
+                                                                                       type="text" name="email"/>
+            <input class="regnLoginGridRightCol" type="submit" value="Create Account"/>
+        </form>
+    </div>
+    <a class="signupLogin mainGridRow mainGridCentreCard" th:href="@{/login}">Are you an existing user? Click here to
+        log in!</a>
+</main>
+<footer class="bodyGridRow footerGridContainer">
+    <p><strong>CSCI5308 (Advanced Topics in Software Development)</strong> is a graduate course offered for students
+        enrolled in the <a href="https://www.dal.ca/macs" target="_blank">Master of Applied Computer Science (MACS)</a>
+        at the <a href="https://www.dal.ca/cs" target="_blank">Faculty of Computer Science</a>, <a
+                href="https://www.dal.ca" target="_blank">Dalhousie University</a>.</p>
+</footer>
+</body>  
 </html>

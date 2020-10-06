@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org">
+<head>
+    <link type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <title>CSCI5308 - Group Formation Tool</title>
+</head>
+<body>
+    <div th:if="${surveypublished}">
+        <h2 class="errorInfo">Survey Already Published. It cannot be edited now</h2>
+        <form th:action="@{/survey/disablesurvey}" th:method="post">
+            <input type="hidden" th:value="${courseId}" name="courseId"/>
+            <input type="submit" value="Disable Survey">
+        </form>
+    </div>
+    <div >
+        <div th:if="${surveynotpublished}">
+            <form th:action="@{/survey/publish}" th:method="post">
+                <input type="hidden" th:value="${courseId}" name="courseId"/>
+                <input type="submit" value="Publish Survey">
+            </form>
+        </div>
+        <div>
+            <h1>Questions Not Added to Survey</h1>
+        </div>
+        <div>
+            <table>
+                <tr>
+                    <th>Title</th>
+                    <th>Question</th>
+                    <th></th>
+                </tr>
+                <tr th:each="question : ${notAddedQuestions}">
+                    <td><h4 th:text="${question.title}"></h4></td>
+                    <td><h4 th:text="${question.question}"></h4></td>
+                    <td>
+                        <div th:if="${surveynotpublished}">
+                            <form th:action="@{/survey/addquestion}" th:method="post">
+                                <input type="hidden" th:value="${question.id}" name="questionId"/>
+                                <input type="hidden" th:value="${courseId}" name="courseId"/>
+                                <input type="hidden" th:value="${#httpServletRequest.remoteUser}" name="bannerId"/>
+                                <input type="submit" value="Add Question to Survey"/>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <br/>
+        <div>
+            <h1>Questions Already Added to the Survey</h1>
+        </div>
+        <div>
+            <table>
+                <tr>
+                    <th>Title</th>
+                    <th>Question</th>
+                    <th></th>
+                </tr>
+                <tr th:each="question : ${alreadyAddedQuestions}">
+                    <td><h4 th:text="${question.title}"></h4></td>
+                    <td><h4 th:text="${question.question}"></h4></td>
+                    <td>
+                        <div th:if="${surveynotpublished}">
+                            <form th:action="@{/survey/deletequestion}" th:method="post">
+                                <input type="hidden" th:value="${question.id}" name="questionId"/>
+                                <input type="hidden" th:value="${courseId}" name="courseId"/>
+                                <input type="hidden" th:value="${#httpServletRequest.remoteUser}" name="bannerId"/>
+                                <input type="submit" value="Delete Question from Survey"/>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
